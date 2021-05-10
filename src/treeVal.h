@@ -26,7 +26,7 @@ void kill_problem(problem);
 void CreateNodes(problem, int ID, int key, int IDleft, int IDright);
 
 
-void valid_tree_walk(Node* node, int*);
+void valid_tree_walk(Node* node, int* n, int min, int max);
 
 void interface(void);
 

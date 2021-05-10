@@ -29,19 +29,19 @@ void CreateNodes(problem prob, int ID, int key, int IDleft, int IDright){
 }
 
 
-void valid_tree_walk(Node* node, int* n){
+void valid_tree_walk(Node* node, int* n, int min, int max){
 
     if(node!=NULL)
         *n += 1;
 
     if (node->leaf[0]!=NULL){
-        if(node->key >node->leaf[0]->key)
-            valid_tree_walk(node->leaf[0], n);
+        if(node->key >node->leaf[0]->key && node->leaf[0]->key > min)
+            valid_tree_walk(node->leaf[0], n, min,node->key);
     }
 
     if (node->leaf[1]!=NULL){
-        if(node->key < node->leaf[1]->key)
-            valid_tree_walk(node->leaf[1], n);
+        if(node->key < node->leaf[1]->key && node->leaf[1]->key < max)
+            valid_tree_walk(node->leaf[1], n, node->key, max);
     }
 
     return;
@@ -66,7 +66,7 @@ void interface(void){
     }
 
     N_reach=0;
-    valid_tree_walk(&prob.nodes[1], &N_reach);
+    valid_tree_walk(&prob.nodes[1], &N_reach, INT_MIN, INT_MAX);
 
     printf("%d", N_reach);
 
