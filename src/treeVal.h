@@ -6,6 +6,9 @@
 #include <stdlib.h> //malloc
 #include "utils.h"
 
+#define INT_MIN -2147483647
+#define INT_MAX 2147483647
+
 typedef struct Node{
     int key;
     struct Node* leaf[2];
@@ -23,7 +26,7 @@ void kill_problem(problem);
 void CreateNodes(problem, int ID, int key, int IDleft, int IDright);
 
 
-int valid_tree_walk(Node* node);
+void valid_tree_walk(Node* node, int*);
 
 void interface(void);
 
