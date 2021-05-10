@@ -6,8 +6,9 @@
 #include <stdlib.h> //malloc
 #include "utils.h"
 
-#define INT_MIN -2147483647
-#define INT_MAX 2147483647
+#define INT_MIN 0
+#define INT_MAX 1000000001
+#define MAX_N 1100000
 
 typedef struct Node{
     int key;
