@@ -34,19 +34,16 @@ int valid_tree_walk(Node* node, int min, int max){
     Node* l = node->leaf[0];
     Node* r = node->leaf[1];
     int key = node->key;
-    int n = 0;
-    if(node->visited==0){
-       n=1;
-       node->visited++;
-    }
+    int n = 1;
+    node->visited = 1;
 
     if (l!=NULL){
-        if(key > l->key && l->key > min)
+        if(key > l->key && l->key > min && l->visited==0)
             n+=valid_tree_walk(l, min,key);
     }
 
     if (r!=NULL){
-        if(key < r->key && r->key < max)
+        if(key < r->key && r->key < max && r->visited==0)
             n+=valid_tree_walk(r, key, max);
     }
 
