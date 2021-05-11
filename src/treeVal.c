@@ -15,7 +15,7 @@ void kill_problem(problem prob){
 void CreateNodes(problem prob, int ID, int key, int IDleft, int IDright){
     Node* node = &prob.nodes[ID];
     node->key = key;
-
+    node->visited=0;
 
     if (IDleft!=-1)
         node->leaf[0] = &prob.nodes[IDleft];
@@ -34,8 +34,11 @@ int valid_tree_walk(Node* node, int min, int max){
     Node* l = node->leaf[0];
     Node* r = node->leaf[1];
     int key = node->key;
-
-    int n=1;
+    int n = 0;
+    if(node->visited==0){
+       n=1;
+       node->visited++;
+    }
 
     if (l!=NULL){
         if(key > l->key && l->key > min)

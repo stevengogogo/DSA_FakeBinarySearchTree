@@ -13,6 +13,7 @@
 typedef struct Node{
     int key;
     struct Node* leaf[2];
+    int visited;
 } Node;
 
 typedef struct {
