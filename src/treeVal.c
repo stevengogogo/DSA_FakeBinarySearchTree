@@ -5,7 +5,6 @@ problem init_problem(int N_nodes){
     problem prob;
     prob.n = N_nodes;
     prob.nodes = (Node*)malloc((N_nodes+1)*sizeof(Node));
-    prob.visited = 0;
     return prob;
 }
 
@@ -16,7 +15,7 @@ void kill_problem(problem prob){
 void CreateNodes(problem prob, int ID, int key, int IDleft, int IDright){
     Node* node = &prob.nodes[ID];
     node->key = key;
-
+    node->visited=0;
 
     if (IDleft!=-1)
         node->leaf[0] = &prob.nodes[IDleft];
