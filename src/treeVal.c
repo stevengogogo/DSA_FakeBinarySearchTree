@@ -4,7 +4,7 @@
 problem init_problem(int N_nodes){
     problem prob;
     prob.n = N_nodes;
-    prob.nodes = (Node*)malloc(MAX_N*sizeof(Node));
+    prob.nodes = (Node*)malloc((N_nodes+1)*sizeof(Node));
     return prob;
 }
 
@@ -29,26 +29,25 @@ void CreateNodes(problem prob, int ID, int key, int IDleft, int IDright){
 }
 
 
-void valid_tree_walk(Node* node, int* n, int min, int max){
+int valid_tree_walk(Node* node, int min, int max){
 
     Node* l = node->leaf[0];
     Node* r = node->leaf[1];
     int key = node->key;
 
-    if(node!=NULL)
-        *n += 1;
+    int n=1;
 
     if (l!=NULL){
         if(key > l->key && l->key > min)
-            valid_tree_walk(l, n, min,key);
+            n+=valid_tree_walk(l, min,key);
     }
 
     if (r!=NULL){
         if(key < r->key && r->key < max)
-            valid_tree_walk(r, n, key, max);
+            n+=valid_tree_walk(r, key, max);
     }
 
-    return;
+    return n;
 }
 
 
@@ -69,8 +68,8 @@ void interface(void){
         CreateNodes(prob, i, key, IDleft, IDright);
     }
 
-    N_reach=0;
-    valid_tree_walk(&prob.nodes[1], &N_reach, INT_MIN, INT_MAX);
+   
+    N_reach =valid_tree_walk(&prob.nodes[1], INT_MIN, INT_MAX);
 
     printf("%d", N_reach);
 
