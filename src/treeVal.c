@@ -4,7 +4,7 @@
 problem init_problem(int N_nodes){
     problem prob;
     prob.n = N_nodes;
-    prob.nodes = (Node*)malloc((N_nodes+1)*sizeof(Node));
+    prob.nodes = (Node*)malloc((N_nodes+30)*sizeof(Node));
     return prob;
 }
 
@@ -68,8 +68,12 @@ void interface(void){
         CreateNodes(prob, i, key, IDleft, IDright);
     }
 
-   
-    N_reach =valid_tree_walk(&prob.nodes[1], INT_MIN, INT_MAX);
+    if(&prob.nodes[1]==NULL){
+        N_reach = 0;
+    }
+    else{
+        N_reach =valid_tree_walk(&prob.nodes[1], INT_MIN, INT_MAX);
+    }
 
     printf("%d", N_reach);
 
