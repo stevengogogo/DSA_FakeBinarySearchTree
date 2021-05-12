@@ -28,9 +28,12 @@ void kill_problem(problem);
 
 void CreateNodes(problem, int ID, int key, int IDleft, int IDright);
 
+/** @brief Find the origin of the node. Use node.parent to find it comes fron parent.leaf[0] or parent.leaf[1]
+ * @return int Find 0,1; -1 for absence.
+*/
 int findOrigin(Node*);
 
-int valid_tree_walk(Node* node, int min, int max);
+int valid_tree_walk(Node* node);
 
 void interface(void);
 

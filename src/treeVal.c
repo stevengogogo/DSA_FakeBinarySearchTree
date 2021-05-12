@@ -29,36 +29,88 @@ void CreateNodes(problem prob, int ID, int key, int IDleft, int IDright){
 
     if (IDleft!=-1){
         node->leaf[0] = &prob.nodes[IDleft];
-        node->leaf[0]->parent = node;
+        prob.nodes[IDleft].parent = node;
     }
     else
         node->leaf[0] = NULL;
 
     if(IDright!=-1){
         node->leaf[1] = &prob.nodes[IDright];
-        node->leaf[1]->parent = node;
+        prob.nodes[IDleft].parent = node;
     }
     else 
         node->leaf[1] = NULL;
 }
 
 
-int valid_tree_walk(Node* node, int min, int max){
+int findOrigin(Node* node){
+    if(node->parent == NULL){
+        return -1;
+    }
+    else if(node->parent->leaf[0] == node){
+        return 0;
+    }
+    else if(node->parent->leaf[1] == node){
+        return 1;
+    }
+    else{
+        return -1;
+    }
+}
+
+
+int valid_tree_walk(Node* node){
 
     Node* l = node->leaf[0];
     Node* r = node->leaf[1];
+    Node* p = node->parent;
+    int dir = findOrigin(node);
     int key = node->key;
-    int n = 1;
+    int n = 0;
+    int valid=0;
     node->visited = 1;
 
-    if (l!=NULL){
-        if(key > l->key && l->key > min && l->visited==0)
-            n+=valid_tree_walk(l, min,key);
+    
+    //check validity
+    if (node->parent != NULL){
+        if (dir==0){
+            if(node->parent->key > node->key)
+                valid = 1;
+        }
+        if(dir ==1){ // comes from right
+            if(node->parent->key < node->key)
+                valid = 1;
+         }
     }
 
+    if(dir==-1 && node->parent==NULL){
+        valid=1;
+    }
+
+    //include if vlid
+    if(valid==1){
+        n = 1;
+    }
+
+
+
+
     if (r!=NULL){
-        if(key < r->key && r->key < max && r->visited==0)
-            n+=valid_tree_walk(r, key, max);
+       if( dir==0 && valid==0 ){
+            //Do nothing
+        } 
+        else{
+            n+=valid_tree_walk(r);
+        }
+    }
+
+    if (l!=NULL){
+        if( dir==1 && valid==0 ){
+            //Do nothing
+        } 
+        else{
+            n+=valid_tree_walk(l);
+        }
     }
 
     return n;
@@ -86,7 +138,7 @@ void interface(void){
         N_reach = 0;
     }
     else{
-        N_reach =valid_tree_walk(&prob.nodes[1], INT_MIN, INT_MAX);
+        N_reach = valid_tree_walk(&prob.nodes[1]);
     }
 
     printf("%d", N_reach);
