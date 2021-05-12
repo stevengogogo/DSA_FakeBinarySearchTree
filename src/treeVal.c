@@ -4,7 +4,17 @@
 problem init_problem(int N_nodes){
     problem prob;
     prob.n = N_nodes;
-    prob.nodes = (Node*)malloc((N_nodes+30)*sizeof(Node));
+    int N = N_nodes+30;
+    prob.nodes = (Node*)malloc(N*sizeof(Node));
+
+    //Initialize node
+    for(int i=0;i<N;i++){
+        prob.nodes[i].parent = NULL;
+        prob.nodes[i].leaf[0] = NULL;
+        prob.nodes[i].leaf[1] = NULL;
+        prob.nodes[i].visited = 0;
+    }
+
     return prob;
 }
 
@@ -17,13 +27,17 @@ void CreateNodes(problem prob, int ID, int key, int IDleft, int IDright){
     node->key = key;
     node->visited=0;
 
-    if (IDleft!=-1)
+    if (IDleft!=-1){
         node->leaf[0] = &prob.nodes[IDleft];
+        node->leaf[0]->parent = node;
+    }
     else
         node->leaf[0] = NULL;
 
-    if(IDright!=-1)
+    if(IDright!=-1){
         node->leaf[1] = &prob.nodes[IDright];
+        node->leaf[1]->parent = node;
+    }
     else 
         node->leaf[1] = NULL;
 }

@@ -13,6 +13,7 @@
 typedef struct Node{
     int key;
     struct Node* leaf[2];
+    struct Node* parent;
     int visited;
 } Node;
 
@@ -27,6 +28,7 @@ void kill_problem(problem);
 
 void CreateNodes(problem, int ID, int key, int IDleft, int IDright);
 
+int findOrigin(Node*);
 
 int valid_tree_walk(Node* node, int min, int max);
 
