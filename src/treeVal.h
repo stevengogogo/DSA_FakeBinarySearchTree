@@ -33,7 +33,7 @@ void CreateNodes(problem, int ID, int key, int IDleft, int IDright);
 */
 int findOrigin(Node*);
 
-int valid_tree_walk(Node* node);
+int valid_tree_walk(Node* node, int min, int max);
 
 void interface(void);
 

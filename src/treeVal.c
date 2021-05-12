@@ -47,10 +47,10 @@ int findOrigin(Node* node){
     if(node->parent == NULL){
         return -1;
     }
-    else if(node->parent->leaf[0] == node){
+    else if(node->parent->leaf[0] == node && node->leaf[0] != node){
         return 0;
     }
-    else if(node->parent->leaf[1] == node){
+    else if(node->parent->leaf[1] == node && node->leaf[1] != node){
         return 1;
     }
     else{
@@ -59,7 +59,7 @@ int findOrigin(Node* node){
 }
 
 
-int valid_tree_walk(Node* node){
+int valid_tree_walk(Node* node, int min, int max){
 
     assert(node!=NULL);
 
@@ -74,26 +74,10 @@ int valid_tree_walk(Node* node){
 
     
     //check validity
-    if (node->parent != NULL){
-        if (dir==0 ){
-            if(node->parent->key > node->key )
-                valid = 1;
-        }
-        if(dir ==1 ){ // comes from right
-            if(node->parent->key < node->key)
-                valid = 1;
-         }
+    if( node->key < max && node->key > min){
+        valid = 1;
+        n=1;
     }
-
-    if(dir==-1 && node->parent==NULL){
-        valid=1;
-    }
-
-    //include if vlid
-    if(valid==1){
-        n = 1;
-    }
-
 
 
     //Traversal
@@ -102,7 +86,7 @@ int valid_tree_walk(Node* node){
             //Do nothing
         } 
         else{
-            n+=valid_tree_walk(r);
+            n+=valid_tree_walk(r, chooseMax(min, key), max);
         }
     }
 
@@ -111,7 +95,7 @@ int valid_tree_walk(Node* node){
             //Do nothing
         } 
         else{
-            n+=valid_tree_walk(l);
+            n+=valid_tree_walk(l, min, chooseMin(max,key));
         }
     }
 
@@ -140,7 +124,7 @@ void interface(void){
         N_reach = 0;
     }
     else{
-        N_reach = valid_tree_walk(&prob.nodes[1]);
+        N_reach = valid_tree_walk(&prob.nodes[1], INT_MIN, INT_MAX);
     }
 
     printf("%d", N_reach);
