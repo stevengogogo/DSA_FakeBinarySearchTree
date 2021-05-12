@@ -1,5 +1,4 @@
 #!/bin/bash
-set -e
 
 echo ""
 echo "$(tput setaf 2; tput bold)Start test: Input/Output $(tput sgr0)"

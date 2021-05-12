@@ -70,31 +70,36 @@ int valid_tree_walk(Node* node, int min, int max){
     int key = node->key;
     int n = 0;
     int valid=0;
-    node->visited = 1;
+
 
     
     //check validity
     if( node->key < max && node->key > min){
         valid = 1;
-        n=1;
     }
+
+    if (node->visited == 0 && valid==1){
+        ++n;
+    }
+
+    node->visited = 1;
 
 
     //Traversal
-    if (r!=NULL && r->visited==0){
+    if (r!=NULL){
         if( dir==0 && valid==0 ){
             //Do nothing
         } 
-        else{
+        else if(r->key != min && r->key != max){
             n+=valid_tree_walk(r, chooseMax(min, key), max);
         }
     }
 
-    if (l!=NULL &&  l->visited==0){
+    if (l!=NULL){
         if( dir==1 && valid==0 ){
             //Do nothing
         } 
-        else{
+        else if(l->key != min && l->key != max){
             n+=valid_tree_walk(l, min, chooseMin(max,key));
         }
     }
