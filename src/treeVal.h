@@ -1,7 +1,7 @@
 #ifndef TREEVAL_H
 #define TREEVAL_H
 
-
+#include <assert.h>
 #include <stdio.h> //NULL
 #include <stdlib.h> //malloc
 #include "utils.h"

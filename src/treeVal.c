@@ -36,7 +36,7 @@ void CreateNodes(problem prob, int ID, int key, int IDleft, int IDright){
 
     if(IDright!=-1){
         node->leaf[1] = &prob.nodes[IDright];
-        prob.nodes[IDleft].parent = node;
+        prob.nodes[IDright].parent = node;
     }
     else 
         node->leaf[1] = NULL;
@@ -61,6 +61,8 @@ int findOrigin(Node* node){
 
 int valid_tree_walk(Node* node){
 
+    assert(node!=NULL);
+
     Node* l = node->leaf[0];
     Node* r = node->leaf[1];
     Node* p = node->parent;
@@ -73,11 +75,11 @@ int valid_tree_walk(Node* node){
     
     //check validity
     if (node->parent != NULL){
-        if (dir==0){
-            if(node->parent->key > node->key)
+        if (dir==0 ){
+            if(node->parent->key > node->key )
                 valid = 1;
         }
-        if(dir ==1){ // comes from right
+        if(dir ==1 ){ // comes from right
             if(node->parent->key < node->key)
                 valid = 1;
          }
@@ -94,9 +96,9 @@ int valid_tree_walk(Node* node){
 
 
 
-
-    if (r!=NULL){
-       if( dir==0 && valid==0 ){
+    //Traversal
+    if (r!=NULL && r->visited==0){
+        if( dir==0 && valid==0 ){
             //Do nothing
         } 
         else{
@@ -104,7 +106,7 @@ int valid_tree_walk(Node* node){
         }
     }
 
-    if (l!=NULL){
+    if (l!=NULL &&  l->visited==0){
         if( dir==1 && valid==0 ){
             //Do nothing
         } 
