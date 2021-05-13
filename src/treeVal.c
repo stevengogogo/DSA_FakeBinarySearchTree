@@ -66,7 +66,6 @@ int valid_tree_walk(Node* node, int min, int max){
     Node* l = node->leaf[0];
     Node* r = node->leaf[1];
     Node* p = node->parent;
-    int dir = findOrigin(node);
     int key = node->key;
     int n = 0;
     int valid=0;
@@ -74,33 +73,18 @@ int valid_tree_walk(Node* node, int min, int max){
 
     
     //check validity
-    if( node->key < max && node->key > min){
-        valid = 1;
-    }
-
-    if (node->visited == 0 && valid==1){
+    if( inBound(key, min, max) == 1){
         ++n;
     }
-    node->visited = 1;
 
 
     //Traversal
     if (r!=NULL){
-        if( dir==0 && valid==0 && r->key < node->key ){
-            //Do nothing
-        } 
-        else if(r->key != min && r->key != max){
-            n+=valid_tree_walk(r, chooseMax(min, key), max);
-        }
+        n+=valid_tree_walk(r, chooseMax(min, key), max);
     }
 
     if (l!=NULL){
-        if( dir==1 && valid==0 && l->key > node->key  ){
-            //Do nothing
-        } 
-        else if(l->key != min && l->key != max){
-            n+=valid_tree_walk(l, min, chooseMin(max,key));
-        }
+        n+=valid_tree_walk(l, min, chooseMin(max,key));
     }
 
     return n;
