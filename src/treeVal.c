@@ -85,6 +85,7 @@ int valid_tree_walk(Node* node, int min, int max){
 
     if (l!=NULL){
         n+=valid_tree_walk(l, min, chooseMin(max,key));
+
     }
 
     return n;
