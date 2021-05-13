@@ -13,6 +13,7 @@
 
 int chooseMax(int a, int b);
 int chooseMin(int a, int b);
+int inBound(int comp, int min, int max);
 
 
 #endif
