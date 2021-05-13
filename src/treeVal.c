@@ -86,7 +86,7 @@ int valid_tree_walk(Node* node, int min, int max){
 
     //Traversal
     if (r!=NULL){
-        if( dir==0 && valid==0 && r->key < node->key ){
+        if(  valid==0 && r->key < node->key ){
             //Do nothing
         } 
         else if(r->key != min && r->key != max){
@@ -95,7 +95,7 @@ int valid_tree_walk(Node* node, int min, int max){
     }
 
     if (l!=NULL){
-        if( dir==1 && valid==0 && l->key > node->key  ){
+        if( valid==0 && l->key > node->key  ){
             //Do nothing
         } 
         else if(l->key != min && l->key != max){
